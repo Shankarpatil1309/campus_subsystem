@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "997760735235",
+    "project_id": "bkit-b51ed",
+    "storage_bucket": "bkit-b51ed.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997760735235:android:c459660fafa3a62c955636",
+        "android_client_info": {
+          "package_name": "com.example.campus_subsystem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALJAOMX0UVFYDNJ2WOeP6Nh1bEjlhTXrQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
