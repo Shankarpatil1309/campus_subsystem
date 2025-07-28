@@ -50,4 +50,3 @@ app.*.map.json
 !/android/app/src/main
 /ios
 
-/lib/firebase_options.dart
