@@ -22,7 +22,8 @@ class _StudentLoginState extends State<StudentLogin> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isKeyboardVisible = KeyboardVisibilityProvider.isKeyboardVisible(context);
+    final bool isKeyboardVisible =
+        KeyboardVisibilityProvider.isKeyboardVisible(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -68,10 +69,14 @@ class _StudentLoginState extends State<StudentLogin> {
                   child: Column(
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(left: 40, right: 40, bottom: 20),
+                        padding: const EdgeInsets.only(
+                            left: 40, right: 40, bottom: 20),
                         child: TextFormField(
                           controller: emailController,
-                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-z]|[A-Z]|[0-9]|\.|@'))],
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-z]|[A-Z]|[0-9]|\.|@'))
+                          ],
                           validator: (name) {
                             if (name == null || name.isEmpty) {
                               return 'Enter Email Address';
@@ -85,7 +90,8 @@ class _StudentLoginState extends State<StudentLogin> {
                         ),
                       ), //Email TextField
                       Container(
-                        padding: const EdgeInsets.only(left: 40, right: 40, bottom: 20),
+                        padding: const EdgeInsets.only(
+                            left: 40, right: 40, bottom: 20),
                         child: TextFormField(
                           obscureText: !isVisible,
                           validator: (pswd) {
@@ -135,29 +141,41 @@ class _StudentLoginState extends State<StudentLogin> {
                                         password: passwordController.text,
                                         isStudent: true,
                                       )
-                                          .onError((FirebaseException e, stackTrace) async {
+                                          .onError((FirebaseException e,
+                                              stackTrace) async {
+                                        print("Error: ${e.code}");
                                         if (e.code == 'user-not-found') {
                                           return await Auth()
                                               .createUser(
-                                            username: emailController.text.trim(),
+                                            username:
+                                                emailController.text.trim(),
                                             password: passwordController.text,
                                             isStudent: true,
                                           )
-                                              .onError((FirebaseException error, stackTrace) {
+                                              .onError((FirebaseException error,
+                                                  stackTrace) {
                                             return null;
                                           }).then((value) => value);
                                           // ScaffoldMessenger.of(context)
                                           //     .showSnackBar(const SnackBar(content: Text("Invalid Email Address.")));
                                         } else if (e.code == 'wrong-password') {
                                           ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(content: Text("Incorrect Password.")));
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "Incorrect Password.")));
                                           setState(() => isClicked = false);
-                                        } else if (e.code == 'network-request-failed') {
+                                        } else if (e.code ==
+                                            'network-request-failed') {
                                           ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(content: Text("Check Internet Connection.")));
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "Check Internet Connection.")));
                                           setState(() => isClicked = false);
                                         } else {
-                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.code.toString())));
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content:
+                                                      Text(e.code.toString())));
                                           setState(() => isClicked = false);
                                         }
                                         return null;
@@ -167,14 +185,16 @@ class _StudentLoginState extends State<StudentLogin> {
                                           Navigator.of(context).pop();
                                         } else {
                                           if (value != null && !value) {
-                                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                                content: Text(
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                                    content: Text(
                                               "Don't use Faculty Login in Student section.",
                                               maxLines: 2,
                                             )));
                                           } else {
-                                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                                content: Text(
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                                    content: Text(
                                               "User not found",
                                               maxLines: 2,
                                             )));
@@ -191,10 +211,14 @@ class _StudentLoginState extends State<StudentLogin> {
                               backgroundColor: Colors.indigo[300],
                               label: const Text(
                                 'Reset Password',
-                                style: TextStyle(fontSize: 17, color: Colors.white),
+                                style: TextStyle(
+                                    fontSize: 17, color: Colors.white),
                               ),
                               onPressed: () async {
-                                Navigator.push(context, MaterialPageRoute(builder: (_) => const ResetPassword()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const ResetPassword()));
                               })),
                     ],
                   ),

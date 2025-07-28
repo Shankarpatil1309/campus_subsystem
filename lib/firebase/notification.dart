@@ -9,7 +9,8 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 class NotificationAPI {
   static final _noti = FlutterLocalNotificationsPlugin();
 
-  static NotificationDetails? get notificationDetails => const NotificationDetails(
+  static NotificationDetails? get notificationDetails =>
+      const NotificationDetails(
         android: AndroidNotificationDetails(
           "id",
           "name",
@@ -37,7 +38,8 @@ class NotificationAPI {
     await http.post(Uri.parse("https://fcm.googleapis.com/fcm/send"),
         headers: <String, String>{
           "Content-Type": "application/json",
-          "Authorization": "key=${DefaultFirebaseOptions.messagingkey}",
+          "Authorization":
+              "key=${DefaultFirebaseOptions.currentPlatform.messagingSenderId}",
         },
         body: jsonEncode(
           <String, dynamic>{

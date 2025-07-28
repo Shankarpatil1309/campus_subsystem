@@ -32,6 +32,9 @@ class Wrapper extends HookWidget {
                 );
               }
             } else {
+              // return StudentDashboard(
+              //   email: state.email,
+              // );
               return const NoInternet();
             }
           });

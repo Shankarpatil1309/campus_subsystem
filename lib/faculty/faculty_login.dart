@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../firebase/auth.dart';
 import '../password_reset.dart';
+import 'faculty_signup.dart';
 
 class FacultyLogin extends StatefulWidget {
   const FacultyLogin({Key? key}) : super(key: key);
@@ -28,7 +29,8 @@ class _FacultyLoginState extends State<FacultyLogin> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isKeyboardVisible = KeyboardVisibilityProvider.isKeyboardVisible(context);
+    final bool isKeyboardVisible =
+        KeyboardVisibilityProvider.isKeyboardVisible(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -73,10 +75,14 @@ class _FacultyLoginState extends State<FacultyLogin> {
                   child: Column(
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(left: 40, right: 40, bottom: 20),
+                        padding: const EdgeInsets.only(
+                            left: 40, right: 40, bottom: 20),
                         child: TextFormField(
                           controller: emailController,
-                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-z]|[A-Z]|[0-9]|\.|@'))],
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-z]|[A-Z]|[0-9]|\.|@'))
+                          ],
                           validator: (name) {
                             if (name == null || name.isEmpty) {
                               return 'Enter Email Address';
@@ -90,7 +96,8 @@ class _FacultyLoginState extends State<FacultyLogin> {
                         ),
                       ), //Email TextField
                       Container(
-                        padding: const EdgeInsets.only(left: 40, right: 40, bottom: 20),
+                        padding: const EdgeInsets.only(
+                            left: 40, right: 40, bottom: 20),
                         child: TextFormField(
                           obscureText: !isVisible,
                           validator: (pswd) {
@@ -137,27 +144,37 @@ class _FacultyLoginState extends State<FacultyLogin> {
                                     password: passwordController.text,
                                     isStudent: false,
                                   )
-                                      .onError((FirebaseException e, stackTrace) async {
-                                    if (e.code == 'user-not-found') {
+                                      .onError((FirebaseException e,
+                                          stackTrace) async {
+                                    if (e.code == 'not-found') {
                                       return await Auth()
                                           .createUser(
                                         username: emailController.text.trim(),
                                         password: passwordController.text,
                                         isStudent: false,
                                       )
-                                          .onError((FirebaseException error, stackTrace) {
+                                          .onError((FirebaseException error,
+                                              stackTrace) {
                                         return null;
                                       }).then((value) => value);
                                       // ScaffoldMessenger.of(context)
                                       //     .showSnackBar(const SnackBar(content: Text("Invalid Email Address.")));
                                     } else if (e.code == 'wrong-password') {
                                       ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(content: Text("Incorrect 4 Password.")));
-                                    } else if (e.code == 'network-request-failed') {
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Incorrect 4 Password.")));
+                                    } else if (e.code ==
+                                        'network-request-failed') {
                                       ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(content: Text("Check Internet Connection.")));
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Check Internet Connection.")));
                                     } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.code.toString())));
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content:
+                                                  Text(e.code.toString())));
                                     }
                                     return null;
                                   }).then((value) {
@@ -165,14 +182,16 @@ class _FacultyLoginState extends State<FacultyLogin> {
                                       Navigator.of(context).pop();
                                     } else {
                                       if (value != null && !value) {
-                                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                            content: Text(
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                                content: Text(
                                           "Don't use Student Login in Faculty section.",
                                           maxLines: 2,
                                         )));
                                       } else {
-                                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                            content: Text(
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                                content: Text(
                                           "User not found",
                                           maxLines: 2,
                                         )));
@@ -194,7 +213,26 @@ class _FacultyLoginState extends State<FacultyLogin> {
                         heroTag: null,
                         backgroundColor: Colors.indigo[300],
                         onPressed: () async {
-                          Navigator.push(context, MaterialPageRoute(builder: (_) => const ResetPassword()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const ResetPassword()));
+                        },
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      FloatingActionButton.extended(
+                        label: const Text(
+                          'New User? Sign Up',
+                        ),
+                        heroTag: 'signup',
+                        backgroundColor: Colors.indigo[300],
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const FacultySignup()));
                         },
                       ),
                     ],
